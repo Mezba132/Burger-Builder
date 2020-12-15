@@ -4,6 +4,14 @@ import BuildControls from '../../components/Burger/BuildControls/BuildControls';
 
 import Aux from '../../hoc/Aox';
 
+const INGREDIENTS_PRICES = {
+    Meat : 5.5,
+    Salad : 6.5,
+    Cheese : 7.5,
+    Bacon : 8.5    
+}
+
+
 class burger extends Component {
 
     state = {
@@ -12,8 +20,8 @@ class burger extends Component {
             Salad : 0,
             Cheese : 0,
             Bacon : 0
-        }
-
+        },
+        totalPrice : 4
     }
 
     addIngredientHhandler = (type) => {
@@ -22,7 +30,12 @@ class burger extends Component {
         const updateIngredients = {...this.state.ingredients};
         updateIngredients[type] = updateCount;
 
-        this.setState({ ingredients : updateIngredients});
+        const priceAddition = INGREDIENTS_PRICES[type];
+        const oldPrice = this.state.totalPrice;
+        const updatePrice = oldPrice + priceAddition;
+        console.log(updatePrice);
+        
+        this.setState({totalPrice: updatePrice, ingredients : updateIngredients});
     }
 
     deleteIngredients = (type) => {
@@ -36,11 +49,12 @@ class burger extends Component {
         updateIngredients[type] = updateCount;
         this.setState({ingredients : updateIngredients});
 
-        this.setState({ ingredients : updateIngredients});
-    }
+        const priceReduction = INGREDIENTS_PRICES[type];
+        const oldPrice = this.state.totalPrice;
+        const updatePrice = oldPrice - priceReduction;
+        console.log(updatePrice);
 
-    disableButton = (key) => {
-
+        this.setState({totalPrice: updatePrice, ingredients : updateIngredients});
     }
 
     render () {
@@ -56,7 +70,7 @@ class burger extends Component {
                 addIngredients={this.addIngredientHhandler} 
                 removeIngredients={this.deleteIngredients}
                 disabled={disableInfo}
-                />
+                totalCost={this.state.totalPrice}/>
             </Aux>
         )
     }
