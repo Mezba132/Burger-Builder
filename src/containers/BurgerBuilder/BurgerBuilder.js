@@ -9,17 +9,25 @@ class burger extends Component {
     state = {
         ingredients : {
             Meat : 0,
-            Salad : 1,
-            Cheese : 2,
+            Salad : 0,
+            Cheese : 0,
             Bacon : 0
         }
+    }
+
+    addIngredientHhandler = (type) => {
+        const oldCount = this.state.ingredients[type];
+        const updateCount = oldCount + 1;
+        const updateIngredients = {...this.state.ingredients};
+        updateIngredients[type] = updateCount;
+        this.setState({ingredients : updateIngredients});
     }
 
     render () {
         return(
             <Aux>
                 <Burger ingredients={this.state.ingredients}/>
-                <BuildControls />
+                <BuildControls addIngredients={this.addIngredientHhandler} />
             </Aux>
         )
     }
