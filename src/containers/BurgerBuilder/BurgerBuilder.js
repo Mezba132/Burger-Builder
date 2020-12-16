@@ -25,7 +25,12 @@ class burger extends Component {
             Bacon : 0
         },
         totalPrice : 4,
-        purchaseable : false
+        purchaseable : false,
+        purchasing : false
+    }
+
+    showModalHandler = () => {
+        this.setState({purchasing : true});
     }
 
     updatePurchaseState (ingredients)  {
@@ -80,7 +85,7 @@ class burger extends Component {
         }
         return(
             <Aux>
-                <Modal>
+                <Modal show={this.state.purchasing}>
                     <OrderSummary ingredients={this.state.ingredients}/>
                 </Modal>
                 <Burger ingredients={this.state.ingredients}/>
@@ -89,7 +94,9 @@ class burger extends Component {
                 removeIngredients={this.deleteIngredients}
                 disabled={disableInfo}
                 totalCost={this.state.totalPrice}
-                purchaseNow={this.state.purchaseable}/>
+                purchaseNow={this.state.purchaseable}
+                ordered={this.showModalHandler}
+                />
             </Aux>
         )
     }
