@@ -33,6 +33,10 @@ class burger extends Component {
         this.setState({purchasing : true});
     }
 
+    cancelModalHandler = () => {
+        this.setState({purchasing : false});
+    }
+
     updatePurchaseState (ingredients)  {
         const sum = Object.keys(ingredients)
         .map( igkey => { return ingredients[igkey]})
@@ -85,7 +89,7 @@ class burger extends Component {
         }
         return(
             <Aux>
-                <Modal show={this.state.purchasing}>
+                <Modal show={this.state.purchasing} canceled={this.cancelModalHandler}>
                     <OrderSummary ingredients={this.state.ingredients}/>
                 </Modal>
                 <Burger ingredients={this.state.ingredients}/>

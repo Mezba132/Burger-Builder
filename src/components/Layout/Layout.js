@@ -5,9 +5,6 @@ import Aux from '../../hoc/Aox';
 
 const layout = (props) => (
     <Aux>
-        <div>
-            Toolbar
-        </div>
         <main className={Classes.content}>
             {props.children}
         </main>
