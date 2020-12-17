@@ -97,6 +97,7 @@ class burger extends Component {
                 show={this.state.purchasing} 
                 canceled={this.cancelPurchaseHandler}>
                     <OrderSummary 
+                    totalPurchase={this.state.totalPrice}
                     ingredients={this.state.ingredients}
                     cancelledPurchase={this.cancelPurchaseHandler}
                     continuePurchase={this.continuePurchaseHandler}/>
