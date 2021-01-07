@@ -36,23 +36,36 @@ class BurgerBuilder extends Component {
     }
 
     continuePurchaseHandler = () => {
-        this.setState({ isLoading : true });
-        const order = {
-            ingredients : this.state.ingredients,
-            totalCost : this.state.totalPrice,
-            customer_details : {
-                name : 'mezba',
-                email: 'mezba@gmail.com',
-                address : {
-                    street : 'nikunzo-2',
-                    city : 'Dhaka'
-                }
-            },
-            delivery_service : 'Fast'
+        // this.setState({ isLoading : true });
+        // const order = {
+        //     ingredients : this.state.ingredients,
+        //     totalCost : this.state.totalPrice,
+        //     customer_details : {
+        //         name : 'mezba',
+        //         email: 'mezba@gmail.com',
+        //         address : {
+        //             street : 'nikunzo-2',
+        //             city : 'Dhaka'
+        //         }
+        //     },
+        //     delivery_service : 'Fast'
+        // }
+        // axios.post('/orders.json', order)
+        // .then(res => this.setState({ isLoading : false, purchasing : false }))
+        // .catch(err => this.setState({ isLoading : false, purchasing : false }));
+        const queryParams = [];
+        for(let ingredients in this.state.ingredients)
+        {
+            queryParams.push(encodeURIComponent(ingredients) + '=' + encodeURIComponent(this.state.ingredients[ingredients]));
         }
-        axios.post('/orders.json', order)
-        .then(res => this.setState({ isLoading : false, purchasing : false }))
-        .catch(err => this.setState({ isLoading : false, purchasing : false }));   
+        // Object.keys(this.state.ingredients).map( ingredients => {
+        //     queryParams.push(encodeURIComponent(ingredients) + '=' + encodeURIComponent(this.state.ingredients[ingredients]));
+        // })
+        const queryString = queryParams.join('&');
+        this.props.history.push({
+            pathname : '/checkout',
+            search : '?' + queryString
+        });
     }
 
     updatePurchaseState (ingredients)  {
@@ -101,7 +114,6 @@ class BurgerBuilder extends Component {
     componentDidMount() {
         axios.get('https://burger-builder-react-911c3-default-rtdb.firebaseio.com/Ingredients.json')
         .then(response => {
-            console.log(response.data)
             this.setState({ ingredients : response.data })
         })
         .catch( error => { this.setState({ error : true }) });
