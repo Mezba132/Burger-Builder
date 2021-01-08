@@ -1,4 +1,3 @@
-import { object } from 'prop-types';
 import React from 'react';
 import Classes from './Burger.module.css';
 import BurgerIngredients from './BurgerIngredients/BurgerIngredients';
@@ -7,14 +6,15 @@ const burger = (props) => {
     let transformedIngredients = Object.keys( props.ingredients) // convert object into array
     .map( igKey => {
         // console.log (props.ingredients[igKey]); // Grab Object Properties Value
-        return [...Array(props.ingredients[igKey])]
+        const {ingredients} = props;
+        return [...Array(ingredients[igKey])]
         .map( (_, i) => {
             return <BurgerIngredients key={igKey + i} type={igKey} />
         });
     })
     .reduce((arr, el) => {
         return arr.concat(el);
-    });
+    }, []);
 
     if(transformedIngredients.length === 0)
     {
