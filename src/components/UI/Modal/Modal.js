@@ -3,7 +3,7 @@ import Classes from './Modal.module.css';
 import Aux from '../../../hoc/Auxilary/Aox';
 import BackDrop from '../BackDrop/BackDrop';
 
-class Modal extends React.Component {
+class Modal extends Component {
 
     shouldComponentUpdate ( nextProps, nextState ) {
         return nextProps.show !== this.props.show || nextProps.children !== this.props.children;
